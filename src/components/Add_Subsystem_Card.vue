@@ -37,6 +37,7 @@
       </md-card>
 
       <md-snackbar :md-active.sync="subSystemSaved">The Sub System {{ lastSubSystem }} was saved with success!</md-snackbar>
+      <md-snackbar :md-active.sync="errorsaving">Unable to save Sub System!</md-snackbar>
     </form>
   </div>
 </template>
@@ -101,15 +102,23 @@
 
       // Instead of this timeout, here you can call your API
       const payload = {name: this.form.name, description: this.form.description}
-      const result = await TWRepository.add_subsystem(this.tumbleweed.id, payload)
-      this.lastSubSystem = `${this.form.name} ${this.form.description}`
-      this.subSystemSaved = true
-      this.sending = false
-      this.clearForm()
-      this.refreshSubSystems()
-      const active_subsystem = await TWRepository.get_subsystem(result.data.info)
-      this.to_subSystem()
-      this.set_subsystem(active_subsystem.data)
+      try {
+        const result = await TWRepository.add_subsystem(this.tumbleweed.id, payload)
+        this.lastSubSystem = `${this.form.name} ${this.form.description}`
+        this.subSystemSaved = true
+        this.sending = false
+        this.clearForm()
+        this.refreshSubSystems()
+        const active_subsystem = await TWRepository.get_subsystem(result.data.info)
+        this.to_subSystem()
+        this.set_subsystem(active_subsystem.data)
+      } catch {
+        this.lastSubSystem = `${this.form.name} ${this.form.description}`;
+        this.subSystemSaved = false;
+        this.sending = false;
+        this.clearForm()
+        this.errorsaving = true;
+      }
     },
     validateUser () {
       this.$v.$touch()

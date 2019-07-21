@@ -37,6 +37,7 @@
       </md-card>
 
       <md-snackbar :md-active.sync="commandTypeSaved">The Command Type {{ lastCommandType }} was saved with success!</md-snackbar>
+      <md-snackbar :md-active.sync="errorsaving">Unable to save command Type!</md-snackbar>
     </form>
   </div>
 </template>
@@ -99,15 +100,23 @@
 
       // Instead of this timeout, here you can call your API
       const payload = {type: this.form.type, description: this.form.description}
-      const result = await TWRepository.add_commandType(payload)
-      this.lastCommandType = `${this.form.type} ${this.form.description}`
-      this.commandTypeSaved = true
-      this.sending = false
-      this.clearForm()
-      this.refreshCommandTypes()
-      const active_commandType = await TWRepository.get_commandType(result.data.info)
-      this.to_commandType()
-      this.set_commandType(active_commandType.data)
+      try {
+        const result = await TWRepository.add_commandType(payload)
+        this.lastCommandType = `${this.form.type} ${this.form.description}`
+        this.commandTypeSaved = true
+        this.sending = false
+        this.clearForm()
+        this.refreshCommandTypes()
+        const active_commandType = await TWRepository.get_commandType(result.data.info)
+        this.to_commandType()
+        this.set_commandType(active_commandType.data)
+      } catch {
+        this.lastCommandType = `${this.form.type} ${this.form.description}`;
+        this.commandTypeSaved = false;
+        this.sending = false;
+        this.clearForm()
+        this.errorsaving = true;
+      }
     },
     validateUser () {
       this.$v.$touch()

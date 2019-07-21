@@ -63,6 +63,7 @@
       </md-card>
 
       <md-snackbar :md-active.sync="datasourceSaved">The Data Source {{ lastDatasource }} was updated with success!</md-snackbar>
+      <md-snackbar :md-active.sync="errorsaving">Unable to save Data Source {{ lastDataSource }}!</md-snackbar>
     </form>
   </div>
 </template>
@@ -145,15 +146,28 @@
       // Instead of this timeout, here you can call your API
       const payload = {name: this.form.name, description: this.form.description,
       type: this.form.type, dtype: this.form.dtype, short_key: this.form.short_key}
-      const result = await TWRepository.update_datasource(this.datasource.id, payload)
-      this.lastDatasource = `${this.form.name} ${this.form.description}`
-      this.datasourceSaved = true
-      this.sending = false
-      this.clearForm()
-      this.refreshDatasources()
-      const active_datasource = await TWRepository.get_datasource(result.data.info)
-      this.to_dataSource()
-      this.set_datasource(active_datasource.data)
+      try {
+        const result = await TWRepository.update_datasource(this.datasource.id, payload)
+        this.lastDatasource = `${this.form.name} ${this.form.description}`
+        this.datasourceSaved = true
+        this.sending = false
+        this.clearForm()
+        this.refreshDatasources()
+        const active_datasource = await TWRepository.get_datasource(result.data.info)
+        this.to_dataSource()
+        this.set_datasource(active_datasource.data)
+      } catch {
+        this.lastDataSource = `${this.form.name} ${this.form.description}`;
+        this.datasourceSaved = false;
+        this.sending = false;
+        this.$v.$reset()
+        this.form.name = this.datasource.name
+        this.form.description = this.datasource.description
+        this.form.type = this.datasource.type
+        this.form.dtype = this.datasource.dtype
+        this.form.short_key = this.datasource.short_key
+        this.errorsaving = true;
+      }
     },
     validateUser () {
       this.$v.$touch()

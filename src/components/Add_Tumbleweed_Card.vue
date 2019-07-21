@@ -37,6 +37,7 @@
       </md-card>
 
       <md-snackbar :md-active.sync="tumbleweedSaved">The Tumbleweed {{ lastTumbleweed }} was saved with success!</md-snackbar>
+      <md-snackbar :md-active.sync="errorsaving">Unable to save Tumbleweed!</md-snackbar>
     </form>
   </div>
 </template>
@@ -100,15 +101,23 @@
 
       // Instead of this timeout, here you can call your API
       const payload = {name: this.form.name, address: this.form.address}
-      const result = await TWRepository.add_tumbleweed(payload)
-      this.lastTumbleweed = `${this.form.name} ${this.form.address}`
-      this.tumbleweedSaved = true
-      this.sending = false
-      this.clearForm()
-      this.refreshTumbleweeds()
-      const active_tumbleweed = await TWRepository.get_tumbleweed(result.data.info)
-      this.to_tumbleweed()
-      this.set_tumbleweed(active_tumbleweed.data)
+      try {
+        const result = await TWRepository.add_tumbleweed(payload)
+        this.lastTumbleweed = `${this.form.name} ${this.form.address}`
+        this.tumbleweedSaved = true
+        this.sending = false
+        this.clearForm()
+        this.refreshTumbleweeds()
+        const active_tumbleweed = await TWRepository.get_tumbleweed(result.data.info)
+        this.to_tumbleweed()
+        this.set_tumbleweed(active_tumbleweed.data)
+      } catch {
+        this.lastTumbleweed = `${this.form.name} ${this.form.address}`;
+        this.tumbleweedSaved = false;
+        this.sending = false;
+        this.clearForm()
+        this.errorsaving = true;
+      }
     },
     validateUser () {
       this.$v.$touch()
