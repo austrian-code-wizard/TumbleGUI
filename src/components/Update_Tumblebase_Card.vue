@@ -64,6 +64,7 @@
       </md-card>
 
       <md-snackbar :md-active.sync="tumblebaseSaved">The Tumblebase {{ lastTumblebase }} was updated with success!</md-snackbar>
+      <md-snackbar :md-active.sync="errorsaving">Unable to save Tumblebase {{ lastTumblebase }}!</md-snackbar>
     </form>
   </div>
 </template>
@@ -146,15 +147,28 @@
       const payload = {name: this.form.name, address: this.form.address,
         host: this.form.host, port: this.form.port,
         command_route: this.form.command_route}
-      const result = await TWRepository.update_tumblebase(this.tumblebase.id, payload)
-      this.lastTumblebase = `${this.form.name} ${this.form.address}`
-      this.tumblebaseSaved = true
-      this.sending = false
-      this.clearForm()
-      this.refreshTumblebases()
-      const active_tumblebase = await TWRepository.get_tumblebase(result.data.info)
-      this.to_tumblebase()
-      this.set_tumblebase(active_tumblebase.data)
+      try {
+        const result = await TWRepository.update_tumblebase(this.tumblebase.id, payload)
+        this.lastTumblebase = `${this.form.name} ${this.form.address}`
+        this.tumblebaseSaved = true
+        this.sending = false
+        this.clearForm()
+        this.refreshTumblebases()
+        const active_tumblebase = await TWRepository.get_tumblebase(result.data.info)
+        this.to_tumblebase()
+        this.set_tumblebase(active_tumblebase.data)
+      } catch {
+        this.lastTumblebase= `${this.form.name} ${this.form.address}`;
+        this.tumblebaseSaved = false;
+        this.sending = false;
+        this.$v.$reset()
+        this.form.name = this.tumblebase.name;
+        this.form.address = this.tumblebase.address;
+        this.form.host = this.tumblebase.host;
+        this.form.port = this.tumblebase.port;
+        this.form.command_route = this.tumblebase.command_route;
+        this.errorsaving = true;
+      }
     },
     validateUser () {
       this.$v.$touch()

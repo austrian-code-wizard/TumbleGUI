@@ -4,7 +4,7 @@
       <md-card class="md-layout-item md-size-50 md-small-size-100">
         <md-card-header>
           <div id="card-type" class="md-body-1">Command Type</div>
-          <div class="md-display-1">Add</div>
+          <div class="md-display-1">Update</div>
         </md-card-header>
 
         <md-card-content>
@@ -32,11 +32,11 @@
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
 
         <md-card-actions>
-          <md-button type="submit" class="md-primary" :disabled="sending">Create Command Type</md-button>
+          <md-button type="submit" class="md-primary" :disabled="sending">Update Command Type</md-button>
         </md-card-actions>
       </md-card>
 
-      <md-snackbar :md-active.sync="commandTypeSaved">The Command Type {{ lastCommandType }} was saved with success!</md-snackbar>
+      <md-snackbar :md-active.sync="commandTypeSaved">The Command Type {{ lastCommandType }} was update with success!</md-snackbar>
     </form>
   </div>
 </template>
@@ -54,8 +54,11 @@
   const TWRepository = RepositoryFactory.get('tumbleWeb')
 
   export default {
-    name: 'Add_CommandType',
+    name: 'Update_CommandType',
     mixins: [validationMixin],
+    computed: mapState({
+      commandType: state => state.active_commandType,
+    }),
     data: () => ({
       form: {
         type: null,
@@ -99,7 +102,7 @@
 
       // Instead of this timeout, here you can call your API
       const payload = {type: this.form.type, description: this.form.description}
-      const result = await TWRepository.add_commandType(payload)
+      const result = await TWRepository.update_commandType(this.commandType.id, payload)
       this.lastCommandType = `${this.form.type} ${this.form.description}`
       this.commandTypeSaved = true
       this.sending = false
@@ -120,6 +123,10 @@
       const { data } = await TWRepository.get_commandTypes()
       this.set_commandType_list(data)
     }
+  },
+  beforeMount(){
+    this.form.type = this.commandType.type;
+    this.form.description = this.commandType.description;
   }
 }
 </script>

@@ -37,6 +37,18 @@ export default {
   get_commandTypes() {
     return Repository.get(`/get-commandTypes`);
   },
+  delete_commandType(id) {
+    return Repository.delete(`/delete-commandType/${id}`)
+  },
+  add_commandType(payload) {
+    return Repository.post(`/add-commandType`, payload)
+  },
+  get_commandType(id) {
+    return Repository.get(`/get-commandType/${id}`)
+  },
+  update_commandType(id, payload) {
+    return Repository.patch(`/update-commandType/${id}`, payload)
+  },
   get_subsystems_by_tumbleweed_id(id) {
     return Repository.get(`/get-subSystems-by-tumbleweed-id/${id}`);
   },

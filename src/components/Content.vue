@@ -23,6 +23,9 @@
     <template v-else-if="get_type=='add_tumblebase'">
       <Add_Tumblebase/>
     </template>
+    <template v-else-if="get_type=='add_commandType'">
+      <Add_CommandType/>
+    </template>
     <template v-else-if="get_type=='tumbleweed'">
       <Tumbleweed_Card/>
     </template>
@@ -35,6 +38,9 @@
     <template v-else-if="get_type=='tumblebase'">
       <Tumblebase_Card/>
     </template>
+    <template v-else-if="get_type=='commandType'">
+      <CommandType_Card/>
+    </template>
     <template v-else-if="get_type=='update_tumbleweed'">
       <Update_Tumbleweed/>
     </template>
@@ -46,6 +52,9 @@
     </template>
     <template v-else-if="get_type=='update_tumblebase'">
       <Update_Tumblebase/>
+    </template>
+    <template v-else-if="get_type=='update_commandType'">
+      <Update_CommandType/>
     </template>
     <template v-else>
       <md-card>
@@ -79,6 +88,9 @@ import Update_Datasource from './Update_Datasource_Card.vue'
 import Tumblebase_Card from './Tumblebase_Card.vue'
 import Add_Tumblebase from './Add_Tumblebase_Card.vue'
 import Update_Tumblebase from './Update_Tumblebase_Card.vue'
+import CommandType_Card from './CommandType_Card.vue'
+import Add_CommandType from './Add_CommandType_Card.vue'
+import Update_CommandType from './Update_CommandType_Card.vue'
 
 export default {
   name: 'Content',
@@ -94,7 +106,10 @@ export default {
     Update_Datasource,
     Tumblebase_Card,
     Add_Tumblebase,
-    Update_Tumblebase
+    Update_Tumblebase,
+    CommandType_Card,
+    Add_CommandType,
+    Update_CommandType
   },
   computed: mapState({
     get_type: state => state.active_type,

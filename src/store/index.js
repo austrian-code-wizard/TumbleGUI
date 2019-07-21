@@ -13,7 +13,7 @@ export default new Vuex.Store({
     active_datasource: null,
     tumbleweed_list: [],
     tumblebase_list: [],
-    command_type_list: [],
+    commandType_list: [],
     subsystem_list: [],
     datasource_list: [],
   },
@@ -39,6 +39,9 @@ export default new Vuex.Store({
     to_update_tumblebase : (state) => {
       state.active_type = "update_tumblebase"
     },
+    to_update_commandType : (state) => {
+      state.active_type = "update_commandType"
+    },
     to_add_subsystem : (state) => {
       state.active_type = "add_subsystem"
     },
@@ -59,6 +62,9 @@ export default new Vuex.Store({
     },
     to_commandType : (state) => {
       state.active_type = "commandType"
+    },
+    to_add_commandType : (state) => {
+      state.active_type = "add_commandType"
     },
     set_tumbleweed : (state, obj) => {
       state.active_tumbleweed = obj
@@ -88,7 +94,7 @@ export default new Vuex.Store({
       state.tumblebase_list = list
     },
     set_commandType_list : (state, list) => {
-      state.command_type_list = list
+      state.commandType_list = list
     }
   }
 })

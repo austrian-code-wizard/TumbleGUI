@@ -1,9 +1,9 @@
 <template>
   <md-list>
-    <md-button class="md-fab-top-center md-primary">
+    <md-button @click.stop="to_add_commandType()" class="md-fab-top-center md-primary">
       <md-icon>add</md-icon>
     </md-button>
-      <md-list-item v-for="commandType in commandTypes" :key="commandType.id" @click.stop="to_commandType();set_active_object(commandType);">
+      <md-list-item v-for="commandType in commandTypes" :key="commandType.id" @click.stop="to_commandType();set_commandType(commandType);">
         <md-icon>whatshot</md-icon>
         <span class="md-list-item-text">
           {{commandType.type}}
@@ -19,15 +19,17 @@ const TWRepository = RepositoryFactory.get('tumbleWeb')
 
 export default {
   name: 'CommandType_List',
+  computed: mapState({
+    commandTypes: state => state.commandType_list
+  }),
   data: () => ({
-    commandTypes: []
   }),
   methods: {
     async fetchCommandTypes () {
       const { data } = await TWRepository.get_commandTypes()
-      this.commandTypes = data
+      this.set_commandType_list(data)
     },
-    ...mapMutations(['to_commandType', 'set_active_object'])
+    ...mapMutations(['to_commandType', 'set_commandType', 'set_commandType_list', 'to_add_commandType'])
   },
   beforeMount(){
     this.fetchCommandTypes();
