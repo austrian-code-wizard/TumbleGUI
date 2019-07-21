@@ -20,7 +20,7 @@
 
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('address')">
-                <label for="last-name">Address</label>
+                <label for="address">Address</label>
                 <md-input name="address" id="address" v-model="form.address" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.address.required">The address is required</span>
                 <span class="md-error" v-else-if="!$v.form.address.minlength">Invalid address</span>

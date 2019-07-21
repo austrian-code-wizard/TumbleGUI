@@ -20,7 +20,7 @@
 
             <div class="md-layout-item md-small-size-100">
               <md-field :class="getValidationClass('description')">
-                <label for="last-name">Description</label>
+                <label for="description">Description</label>
                 <md-input name="description" id="description" v-model="form.description" :disabled="sending" />
                 <span class="md-error" v-if="!$v.form.description.required">The description is required</span>
                 <span class="md-error" v-else-if="!$v.form.description.minlength">Invalid description</span>
