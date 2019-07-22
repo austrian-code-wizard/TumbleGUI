@@ -29,7 +29,13 @@
             </md-table-row>
             <md-table-row>
               <md-table-cell>Data Type</md-table-cell>
-              <md-table-cell>{{datasource.dtype}}</md-table-cell>
+              <md-table-cell v-if="this.datasource.dtype=='I'">Integer</md-table-cell>
+              <md-table-cell v-else-if="this.datasource.dtype=='S'">String</md-table-cell>
+              <md-table-cell v-else-if="this.datasource.dtype=='L'">Long</md-table-cell>
+              <md-table-cell v-else-if="this.datasource.dtype=='F'">Float</md-table-cell>
+              <md-table-cell v-else-if="this.datasource.dtype=='B'">Bytes</md-table-cell>
+              <md-table-cell v-else-if="this.datasource.dtype=='M'">Image</md-table-cell>
+              <md-table-cell v-else>Unknown</md-table-cell>
             </md-table-row>
             <md-table-row>
               <md-table-cell>Source Type</md-table-cell>
