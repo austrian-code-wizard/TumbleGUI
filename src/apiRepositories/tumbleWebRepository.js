@@ -78,5 +78,23 @@ export default {
   },
   update_datasource(id, payload) {
     return Repository.patch(`/update-dataSource/${id}`, payload)
-  }
+  },
+  get_active_run(id) {
+    return Repository.get(`/get-active-run/${id}`)
+  },
+  get_runs_by_tumbleweed_id(id) {
+    return Repository.get(`/get-runs-by-tumbleweed-id/${id}`)
+  },
+  start_run(id, payload) {
+    return Repository.post(`/start-run/${id}`, payload)
+  },
+  stop_run(id) {
+    return Repository.post(`/stop-run/${id}`)
+  },
+  update_run(id, payload) {
+    return Repository.patch(`/update-run/${id}`, payload)
+  },
+  delete_run(id) {
+    return Repository.delete(`/delete-run/${id}`)
+  },
 };

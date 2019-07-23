@@ -2,7 +2,7 @@
   <md-list :md-expand-single="true">
     <md-button @click.stop="to_add_tumbleweed" class="md-fab-top-center md-primary">
     <md-icon>add</md-icon>
-  </md-button>
+    </md-button>
         <md-list-item md-expand v-for="tumbleweed in tumbleweeds" :key="tumbleweed.id" @click.stop="fetchSubSystems(tumbleweed.id);to_tumbleweed();set_tumbleweed(tumbleweed);">
           <md-icon>label</md-icon>
           <span class="md-list-item-text">{{tumbleweed.name}}</span>
@@ -56,7 +56,7 @@ export default {
     ...mapMutations(['to_tumbleweed', 'to_subSystem', 'to_dataSource',
     'to_add_tumbleweed', 'to_add_subsystem', 'to_add_datasource', 'set_tumbleweed',
     'set_subsystem', 'set_datasource','set_tumbleweed_list', 'set_datasource_list',
-    'set_subsystem_list'])
+    'set_subsystem_list', 'to_welcome'])
   },
   beforeMount(){
     this.fetchTumbleweeds();

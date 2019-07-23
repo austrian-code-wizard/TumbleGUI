@@ -1,4 +1,5 @@
 <template>
+  <div>
     <div>
       <md-card>
         <md-card-header>
@@ -28,9 +29,13 @@
       </md-card>
       <md-snackbar :md-duration=3000 :md-active.sync="error_on_delete">Failed to delete Tumbleweed {{ tumbleweed.id }}!</md-snackbar>
     </div>
+    <br>
+    <Run_Card/>
+  </div>
 </template>
 
 <script>
+import Run_Card from './Run_Card.vue'
 import { mapState, mapMutations } from 'vuex'
 import { RepositoryFactory } from './../apiRepositories/repositoryFactory'
 const TWRepository = RepositoryFactory.get('tumbleWeb')
@@ -39,6 +44,7 @@ const TWRepository = RepositoryFactory.get('tumbleWeb')
 export default {
   name: 'Tumbleweed_Card',
   components: {
+    Run_Card
   },
   data: () => ({
     error_on_delete: false
