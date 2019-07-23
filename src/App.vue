@@ -1,7 +1,7 @@
 <template>
   <div class="page-container">
     <md-app>
-      <md-app-toolbar class="md-primary">
+      <md-app-toolbar id="toolbar" class="md-primary">
         <md-button class="md-icon-button" @click="toggleMenu">
           <md-icon>menu</md-icon>
         </md-button>
@@ -98,4 +98,8 @@ html, body, template, .page-container, .md-app {
 .md-tabs {
     margin-bottom: 24px;
   }
+#toolbar{
+      position:sticky;
+      top:1px;
+}
 </style>

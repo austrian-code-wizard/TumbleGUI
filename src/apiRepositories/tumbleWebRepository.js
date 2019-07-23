@@ -97,4 +97,7 @@ export default {
   delete_run(id) {
     return Repository.delete(`/delete-run/${id}`)
   },
+  get_run(id) {
+    return Repository.get(`/get-run/${id}`)
+  },
 };
