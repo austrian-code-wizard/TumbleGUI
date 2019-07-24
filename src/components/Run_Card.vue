@@ -3,7 +3,8 @@
       <form novalidate @submit.prevent="validateUser">
         <md-card class="md-layout-item" v-if="active_run===null">
           <md-card-header>
-              <div id="card-type" class="md-display-2">Not active</div>
+              <div id="card-type" class="md-body-1">Runs</div>
+              <div class="md-display-2">Not active</div>
           </md-card-header>
           <md-card-content>
             <div class="md-layout md-gutter">
@@ -32,7 +33,8 @@
         </md-card>
         <md-card class="md-layout-item" v-else>
           <md-card-header>
-            <div id="card-type" class="md-display-2">Active: {{active_run.name}}</div>
+            <div id="card-type" class="md-body-1">Runs</div>
+            <div class="md-display-2">Active: {{active_run.name}}</div>
           </md-card-header>
           <md-card-content>
             <div class="md-display-3">T+ {{time_delta}}</div>
@@ -164,7 +166,7 @@ export default {
     tumbleweed: state => state.active_tumbleweed
   }),
   methods: {
-    ...mapMutations(['to_update_run', 'to_welcome']),
+    ...mapMutations(['to_update_run', 'to_welcome', 'set_update_runs_true']),
     getValidationClass (fieldName) {
       const field = this.$v.form[fieldName]
 
@@ -215,6 +217,7 @@ export default {
           this.selected_run_id = result.data.info
           this.set_selected_run
         }
+        this.set_update_runs_true()
       } catch {
         this.lastFormAction = "start";
         this.runSaved = false;
@@ -283,6 +286,7 @@ export default {
           if (this.selected_run != null) {
             this.set_selected_run(this.selected_run.id)
           }
+          this.set_update_runs_true()
         }
       } catch {
         this.error_on_delete = true
@@ -317,23 +321,25 @@ export default {
       }
     },
     get_time_delta () {
-      var start = new Date(this.active_run.created_at)
-      var now = new Date()
-      var time = ((now.getTime()-start.getTime()) / 1000)
-      // Hours, minutes and seconds
-      var hrs = ~~(time / 3600);
-      var mins = ~~((time % 3600) / 60);
-      var secs = ~~time % 60;
+      if (this.active_run != null) {
+        var start = new Date(this.active_run.created_at)
+        var now = new Date()
+        var time = ((now.getTime()-start.getTime()) / 1000)
+        // Hours, minutes and seconds
+        var hrs = ~~(time / 3600);
+        var mins = ~~((time % 3600) / 60);
+        var secs = ~~time % 60;
 
-      // Output like "1:01" or "4:03:59" or "123:03:59"
-      var ret = "";
+        // Output like "1:01" or "4:03:59" or "123:03:59"
+        var ret = "";
 
-      if (hrs > 0) {
-          ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+        if (hrs > 0) {
+            ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+        }
+        ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+        ret += "" + secs;
+        this.time_delta = ret;
       }
-      ret += "" + mins + ":" + (secs < 10 ? "0" : "");
-      ret += "" + secs;
-      this.time_delta = ret;
       return
     },
   },
@@ -366,7 +372,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #card-type {
-  padding: 5px;
+  color: #d69760
 }
 #stop-button {
   color: white;

@@ -16,8 +16,15 @@ export default new Vuex.Store({
     commandType_list: [],
     subsystem_list: [],
     datasource_list: [],
+    update_runs: false,
   },
   mutations: {
+    set_update_runs_true: (state) => {
+      state.update_runs = true
+    },
+    set_update_runs_false: (state) => {
+      state.update_runs = false
+    },
     to_welcome : (state) => {
       state.active_type = "welcome"
     },

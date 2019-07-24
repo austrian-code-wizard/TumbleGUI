@@ -100,4 +100,13 @@ export default {
   get_run(id) {
     return Repository.get(`/get-run/${id}`)
   },
+  get_commands_by_tumbleweed_id_and_run_id(tw_id, run_id) {
+    return Repository.get(`/get-commands-by-tumbleweed-id-and-run-id/${tw_id}/${run_id}`)
+  },
+  get_unanswered_commands_by_tumbleweed_id_and_run_id(tw_id, run_id) {
+    return Repository.get(`/get-unanswered-commands-by-tumbleweed-id-and-run-id/${tw_id}/${run_id}`)
+  },
+  send_command(tumbleweed_id, tumblebase_id, commandType_id, payload) {
+    return Repository.post(`/send-command/${tumbleweed_id}/${tumblebase_id}/${commandType_id}`, payload)
+  },
 };

@@ -31,8 +31,8 @@
     </div>
     <br>
     <div class="md-layout">
-      <Run_Card class="md-layout-item"/>
-      <Command_Card class="md-layout-item"/>
+      <Run_Card class="md-layout-item md-size-33"/>
+      <Command_Card class="md-layout-item md-size-66"/>
     </div>
   </div>
 </template>
