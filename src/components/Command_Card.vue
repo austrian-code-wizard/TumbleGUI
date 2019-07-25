@@ -1,6 +1,6 @@
 <template>
   <div id="command-card">
-    <md-card class="md-layout-item">
+    <md-card>
       <md-card-header>
         <div id="card-type" class="md-body-1">Commands</div>
       </md-card-header>
@@ -40,36 +40,38 @@
         </form>
       </md-card-content>
     </md-card>
-    <md-card>
-      <md-card-header class="md-layout md-gutter md-alignment-center-space-between">
-        <div class="md-layout-item">
-          <md-field>
-            <label for="selected_run_id">Select Run</label>
-            <md-select v-model="selected_run_id" name="selected_run_id" id="selected_run_id">
-              <md-option v-for="run in runs" :key="run.id" :value="run.id">{{run.name}}</md-option>
-            </md-select>
-          </md-field>
-        </div>
-        <div class="md-layout-item">
-          <div class="input">
-            <md-checkbox v-model="get_unanswered">Unanswered</md-checkbox>
+      <md-card>
+        <md-card-header class="md-layout md-gutter md-alignment-center-space-between">
+          <div class="md-layout-item">
+            <md-field>
+              <label for="selected_run_id">Select Run</label>
+              <md-select v-model="selected_run_id" name="selected_run_id" id="selected_run_id">
+                <md-option v-for="run in runs" :key="run.id" :value="run.id">{{run.name}}</md-option>
+              </md-select>
+            </md-field>
           </div>
-        </div>
-      </md-card-header>
-      <md-card-content>
-        <md-table v-model="commands" md-sort="id" md-sort-order="desc" md-card>
-          <md-table-row slot="md-table-row" slot-scope="{ item }">
-            <md-table-cell md-label="ID" md-numeric>{{ item.id }}</md-table-cell>
-            <md-table-cell md-label="Created At" >{{ ((new Date(item.created_at)).toLocaleString())}}</md-table-cell>
-            <md-table-cell md-label="Sender Base ID"md-numeric>{{ item.sender_base_id }}</md-table-cell>
-            <md-table-cell md-label="Command Type ID" md-numeric>{{ item.command_type_id }}</md-table-cell>
-            <md-table-cell md-label="Args">{{ item.args }}</md-table-cell>
-            <md-table-cell md-label="Transmitted">{{ item.transmitted }}</md-table-cell>
-            <md-table-cell md-label="Response">{{ item.response }}</md-table-cell>
-          </md-table-row>
-        </md-table>
-      </md-card-content>
-    </md-card>
+          <div class="md-layout-item">
+            <div class="input">
+              <md-checkbox v-model="get_unanswered">Unanswered</md-checkbox>
+            </div>
+          </div>
+        </md-card-header>
+        <md-card-content>
+          <div class="command-table">
+            <md-table v-model="commands" md-sort="id" md-sort-order="desc" md-card md-fixed-header>
+              <md-table-row slot="md-table-row" slot-scope="{ item }">
+                <md-table-cell md-label="ID">{{ item.id }}</md-table-cell>
+                <md-table-cell md-label="Created At" >T+{{ get_time_delta(item.created_at)}}</md-table-cell>
+                <md-table-cell md-label="Base">{{ item.sender_base_id }}</md-table-cell>
+                <md-table-cell md-label="CType">{{ item.command_type_id }}</md-table-cell>
+                <md-table-cell md-label="Args">{{ item.args }}</md-table-cell>
+                <md-table-cell md-label="Trans">{{ item.transmitted }}</md-table-cell>
+                <md-table-cell md-label="Resp">{{ item.response }}</md-table-cell>
+              </md-table-row>
+            </md-table>
+          </div>
+        </md-card-content>
+      </md-card>
     <md-snackbar :md-duration=3000 :md-active.sync="error">{{error_message}}</md-snackbar>
   </div>
 </template>
@@ -312,7 +314,7 @@ export default {
       }
     },
     get_time_delta (iso) {
-        var start = new Date(this.active_run.created_at)
+        var start = new Date(iso)
         var now = new Date()
         var time = ((now.getTime()-start.getTime()) / 1000)
         // Hours, minutes and seconds
@@ -340,5 +342,12 @@ export default {
 #card-type {
   color: #d69760
 }
-
+.command-table {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+}
+.md-table .md-table-cell {
+  text-align: left;
+}
 </style>

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <div>
       <md-card>
         <md-card-header>
           <div id="card-type" class="md-body-1">Tumbleweed</div>
@@ -28,11 +27,10 @@
         </md-card-actions>
       </md-card>
       <md-snackbar :md-duration=3000 :md-active.sync="error_on_delete">Failed to delete Tumbleweed {{ tumbleweed.id }}!</md-snackbar>
-    </div>
     <br>
     <div class="md-layout">
-      <Run_Card class="md-layout-item md-size-33"/>
-      <Command_Card class="md-layout-item md-size-66"/>
+      <Run_Card class="md-layout-item md-xlarge-size-33 md-large-size-40 md-medium-size-100 md-small-size-100 md-xsmall-size-100"/>
+      <Command_Card class="md-layout-item md-xlarge-size-66 md-large-size-60 md-medium-size-100 md-small-size-100 md-xsmall-size-100"/>
     </div>
   </div>
 </template>
