@@ -12,7 +12,7 @@
                 <md-field :class="getValidationClass('command_type_id')">
                   <label for="command_type_id">Command Type</label>
                   <md-select name="command_type_id" id="command_type_id" v-model="form.command_type_id" md-dense>
-                    <md-option v-for="commandType in commandTypes" :value="commandType.id">{{commandType.type}}</md-option>
+                    <md-option v-for="commandType in commandTypes" :key="commandType.id" :value="commandType.id">{{commandType.type}}</md-option>
                   </md-select>
                   <span class="md-error">The command type is required</span>
                 </md-field>
@@ -22,7 +22,7 @@
                 <md-field :class="getValidationClass('tumblebase_id')">
                   <label for="tumblebase_id">Tumblebase</label>
                   <md-select name="tumblebase_id" id="tumblebase_id" v-model="form.tumblebase_id" md-dense>
-                    <md-option v-for="tumblebase in tumblebases" :value="tumblebase.id">{{tumblebase.name}}</md-option>
+                    <md-option v-for="tumblebase in tumblebases" :key="tumblebase.id" :value="tumblebase.id">{{tumblebase.name}}</md-option>
                   </md-select>
                   <span class="md-error">The Tumblebase is required</span>
                 </md-field>
@@ -142,19 +142,19 @@ export default {
     this.get_tumblebases()
   },
   watch: {
-    selected_run_id: function (val) {
+    selected_run_id: function () {
       this.refresh_commands();
     },
-    get_unanswered: function(val) {
+    get_unanswered: function() {
       this.refresh_commands();
     },
-    tumbleweed: function(val) {
+    tumbleweed: function() {
       this.get_active_run()
       this.get_runs()
       this.get_commandTypes()
       this.get_tumblebases()
     },
-    update_runs: function(val) {
+    update_runs: function() {
       this.set_update_runs_false()
       this.get_active_run()
       this.get_runs()

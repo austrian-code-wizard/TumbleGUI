@@ -46,9 +46,6 @@ import CommandType_List from './components/CommandType_List.vue'
 
 export default {
   name: 'app',
-  computed: mapState({
-    is_open: state => state.sidebar_open
-  }),
   components: {
     Content,
     Tumbleweed_List,

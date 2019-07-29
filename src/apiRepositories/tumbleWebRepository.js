@@ -109,4 +109,7 @@ export default {
   send_command(tumbleweed_id, tumblebase_id, commandType_id, payload) {
     return Repository.post(`/send-command/${tumbleweed_id}/${tumblebase_id}/${commandType_id}`, payload)
   },
+  get_datapoints_by_datasource_and_run_id_interval(datasource_id, run_id, start, end) {
+    return Repository.get(`/get-datapoints-by-dataSource-and-run-interval/${datasource_id}/${run_id}/${start}/${end}`)
+  }
 };

@@ -48,11 +48,15 @@
           <md-button @click="delete_Datasource(datasource.id)">Delete</md-button>
         </md-card-actions>
       </md-card>
+      <br>
+      <Datasource_Data/>
       <md-snackbar :md-duration=3000 :md-active.sync="error_on_delete">Failed to delete Datasource {{ datasource.id }}!</md-snackbar>
     </div>
 </template>
 
 <script>
+import Numeric_Chart from "./Numeric_Chart_Card.vue"
+import Datasource_Data from "./Datasource_Data_Card.vue"
 import { mapState, mapMutations } from 'vuex'
 import { RepositoryFactory } from './../apiRepositories/repositoryFactory'
 const TWRepository = RepositoryFactory.get('tumbleWeb')
@@ -61,6 +65,8 @@ const TWRepository = RepositoryFactory.get('tumbleWeb')
 export default {
   name: 'DatasourceCard',
   components: {
+    Numeric_Chart,
+    Datasource_Data
   },
   data: () => ({
     error_on_delete: false
