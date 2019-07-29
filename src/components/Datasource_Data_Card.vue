@@ -37,9 +37,7 @@
         </div>
       </md-card-header>
       <md-card-content>
-        <div>
           <Numeric_Chart :chartData="chart_data" :viewMin="viewMin" :viewMax="viewMax"/>
-        </div>
       </md-card-content>
     </md-card>
     <md-snackbar :md-duration=3000 :md-active.sync="error">{{error_message}}</md-snackbar>
@@ -112,12 +110,20 @@ export default {
     this.get_runs()
   },
   watch: {
+    datasource: function (val) {
+      this.data_header[0] = null
+      this.data_header[1] = this.datasource.name
+      this.selected_run_id = null
+      this.run = null
+      this.runs = []
+      this.get_runs()
+    },
     live: function (val) {
       this.refresh_data();
       if (val == true) {
         this.interval = setInterval(() => {
           this.refresh_data();
-        },1000)
+        },100)
         this.viewMin = 0
         this.viewMax = this.live_window
       } else {
@@ -238,5 +244,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

@@ -1,7 +1,4 @@
 <template>
-  <md-card>
-    <md-card-content>
-      <div>
       <GChart class="chart-card"
         :settings="{packages: ['corechart']}"
         :data="chartData"
@@ -9,9 +6,6 @@
         :resizeDebounce="500"
         type="LineChart"
       />
-    </div>
-</md-card-content>
-</md-card>
 </template>
 
 <script>
