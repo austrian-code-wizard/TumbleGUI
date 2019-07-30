@@ -37,7 +37,17 @@
         </div>
       </md-card-header>
       <md-card-content>
+        <template v-if="((datasource.dtype=='S')||(datasource.dtype=='B')||(datasource.dtype=='L'))">
+          <List_Chart :chartData="chart_data"/>
+        </template>
+        <template v-else-if="((datasource.dtype=='I')||(datasource.dtype=='F'))">
           <Numeric_Chart :chartData="chart_data" :viewMin="viewMin" :viewMax="viewMax"/>
+        </template>
+        <template v-else-if="datasource.dtype=='M'">
+          <Image_Chart :chartData="chart_data"/>
+        </template>
+        <template v-else>
+        </template>
       </md-card-content>
     </md-card>
     <md-snackbar :md-duration=3000 :md-active.sync="error">{{error_message}}</md-snackbar>
@@ -49,6 +59,8 @@ import { mapState, mapMutations } from 'vuex'
 import { RepositoryFactory } from './../apiRepositories/repositoryFactory'
 const TWRepository = RepositoryFactory.get('tumbleWeb')
 import Numeric_Chart from "./Numeric_Chart_Card.vue"
+import Image_Chart from "./Image_Chart_Card.vue"
+import List_Chart from "./List_Chart_Card.vue"
 
 Date.prototype.toLocalISOString = function() {
 
@@ -67,7 +79,9 @@ Date.prototype.toLocalISOString = function() {
 export default {
   name: 'Datasource_Data',
   components: {
-    Numeric_Chart
+    Numeric_Chart,
+    Image_Chart,
+    List_Chart
   },
   data: () => ({
     live: false,

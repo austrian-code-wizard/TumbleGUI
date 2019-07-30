@@ -129,7 +129,7 @@ export default {
   mounted() {
     this.interval = setInterval(() => {
       this.refresh_commands();
-    },5000),
+    },1000),
     this.refresh_commands()
   },
   destroyed() {
